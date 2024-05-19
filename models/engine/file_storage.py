@@ -5,7 +5,6 @@ this module contains class FileStorage
 """
 import json
 from models.base_model import BaseModel
-from pathlib import Path
 
 
 class FileStorage:
@@ -37,14 +36,11 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r') as read_from:
                 data = json.load(read_from)
-                print(type(data))
+                # print(type(data))
                 for item in data.values():
                     class_name = item['__class__']
                     del item['__class__']
                     self.new(eval(class_name)(**item))
         except FileNotFoundError:
-            print("file not found")
-            return
-        except json.JSONDecodeError:
-            print("json decode error")
+            # print("file not found")
             return
