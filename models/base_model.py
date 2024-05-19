@@ -24,13 +24,12 @@ class BaseModel:
             date_format = '%Y-%m-%dT%H:%M:%S.%f'
             for key, value in kwargs.items():
                 if key != '__class__':
-                    self.__dict__[key] =  value
+                    self.__dict__[key] = value
 
                 if key == 'created_at' or key == 'updated_at':
                     self.__dict__[key] = datetime.strptime(value, date_format)
         else:
             models.storage.new(self)
-
 
     def __str__(self):
         """string representation of class"""
@@ -46,8 +45,9 @@ class BaseModel:
         """
         this method returns dict of instance
         """
-        #new_dict = self.__dict__.copy()
-        self.__dict__['__class__'] = self.__class__.__name__
-        self.__dict__['created_at'] = self.created_at.isoformat()
-        self.__dict__['updated_at'] = self.updated_at.isoformat()
-        return self.__dict__
+        dict_data = {}
+        dict_data.update(self.__dict__)
+        dict_data.update({'__class__': self.__class__.__name__})
+        dict_data['created_at'] = self.created_at.isoformat()
+        dict_data['updated_at'] = self.updated_at.isoformat()
+        return dict_data

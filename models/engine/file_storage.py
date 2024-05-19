@@ -26,12 +26,10 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to __file_path"""
-        obj_dicts = FileStorage.__objects.copy()
-        for k in obj_dicts:
-            obj_dicts[k] = obj_dicts[k].to_dict()
-        print('----------obj_dicts')
-        print(obj_dicts)
         with open(FileStorage.__file_path, "w") as write_to:
+            obj_dicts = FileStorage.__objects.copy()
+            for k in obj_dicts:
+                obj_dicts[k] = obj_dicts[k].to_dict()
             json.dump(obj_dicts, write_to)
 
     def reload(self):
